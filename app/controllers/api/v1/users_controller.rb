@@ -16,7 +16,7 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/1/address
   def address
     @user = set_user
-    render json: @user
+    render json: @user, serializer: AddressUserSerializer
   end
 
   # POST /users
