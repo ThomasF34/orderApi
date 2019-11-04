@@ -10,7 +10,7 @@ thomas = User.create(fname: 'Thomas', lname: 'Falcone', email: 'mySuperEmail', s
 User.create(fname: 'Fatima', lname: 'Machhouri', email: 'secondEmail')
 
 5.times do |i|
-  Product.create(name: "Product ##{i}", price: i, description: "A product.")
+  Product.create(name: "Product ##{i}", price: i + 20, description: "A product.")
 end
 
 newOrder = thomas.orders.create()
