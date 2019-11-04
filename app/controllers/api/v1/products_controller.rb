@@ -4,8 +4,7 @@ class Api::V1::ProductsController < ApplicationController
   # GET /products
   def index
     @products = Product.all
-
-    render json: @products
+    render json: @products, each_serializer: FullProductSerializer
   end
 
   # GET /products/1
