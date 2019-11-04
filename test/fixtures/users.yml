@@ -3,13 +3,13 @@
 one:
   fname: MyString
   lname: MyString
-  address: MyString
-  postalcode: MyString
+  street: MyString
   city: MyString
+  postalcode: MyString
 
 two:
   fname: MyString
   lname: MyString
-  address: MyString
-  postalcode: MyString
+  street: MyString
   city: MyString
+  postalcode: MyString

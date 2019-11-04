@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  namespace :api do 
+  namespace :api do
     namespace :v1 do
-      resources :users do 
-        get 'address', on: :member 
+      resources :orders
+    end
+  end
+  namespace :api do
+    namespace :v1 do
+      resources :products
+      resources :users do
+        resources :orders
+        get 'address', on: :member
       end
     end
   end
