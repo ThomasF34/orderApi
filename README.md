@@ -13,7 +13,15 @@
 - [ ] /users/:id/card Knows if a card is register or not. If no card is
   registered, the user should not use the Skill to register it. (GET)
 
-## Local usage 
+## Disclaimer
+
+The aim of this API is to mock the behavior of a restaurant in order to make order through Alexa Skill. Thus, we decided to ignore some feature that seems irrelevant to us **based on the context of our project**
+
+It's important to note that :
+- All information are accessible through HTTP requests
+- No authentication system is used
+
+## Local usage
 
 Install ruby with **rbenv**, rails with `gem install rails` and all needed gems with `bundle install` then :
 
