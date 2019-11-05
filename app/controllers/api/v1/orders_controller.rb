@@ -15,13 +15,20 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    @order = @user.orders.create(order_params.except(:products))
 
-    if @order.save
-      render json: @order, status: :created, location: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
+    order_params["products"].each do |placement|
+      product = Product.where(name: placement["product"]["name"]).first
+      if product.nil?.!
+        newPlacement = Placement.new(order_id: @order.id, product_id: product.id, quantity: placement["quantity"])
+        newPlacement.save
+      else
+        @order.destroy
+        render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
+      end
     end
+
+    render json: @order, status: :created
   end
 
   # PATCH/PUT /orders/1
@@ -50,6 +57,6 @@ class Api::V1::OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit()
+      params.require(:order).permit(:user_id, products: [:quantity, product: :name])
     end
 end

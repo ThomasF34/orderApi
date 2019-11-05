@@ -1,0 +1,18 @@
+{
+  "order": {
+    "products": [
+      {
+        "quantity": 1,
+        "product": {
+          "name": "Product #1"
+        }
+      },
+      {
+        "quantity": 1,
+        "product": {
+          "name": "Product #2"
+        }
+      }
+    ]
+  }
+}
