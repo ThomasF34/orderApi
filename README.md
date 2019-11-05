@@ -30,3 +30,14 @@ Install ruby with **rbenv**, rails with `gem install rails` and all needed gems 
 rails db:setup
 rails s
 ```
+
+## Deploy
+
+We used Heroku at https://food-mock-api.herokuapp.com/
+
+To setup DB use
+```
+rake db:schema:load
+rake db:migrate
+rake db:seed
+```
