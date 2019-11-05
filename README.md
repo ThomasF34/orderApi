@@ -20,6 +20,7 @@ The aim of this API is to mock the behavior of a restaurant in order to make ord
 It's important to note that :
 - All information are accessible through HTTP requests
 - No authentication system is used
+- No testing
 
 ## Local usage
 

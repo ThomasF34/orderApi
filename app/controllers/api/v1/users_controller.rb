@@ -1,10 +1,9 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :address, :card]
 
   # GET /users
   def index
     @users = User.all
-
     render json: @users
   end
 
@@ -15,8 +14,12 @@ class Api::V1::UsersController < ApplicationController
 
   # GET /users/1/address
   def address
-    @user = set_user
     render json: @user, serializer: AddressUserSerializer
+  end
+
+  # GET /users/1/card
+  def card
+    render json: @user.payment_info.nil?.!
   end
 
   # POST /users
