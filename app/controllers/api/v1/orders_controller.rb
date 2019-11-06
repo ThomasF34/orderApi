@@ -31,19 +31,39 @@ class Api::V1::OrdersController < ApplicationController
     render json: @order, status: :created
   end
 
-  # PATCH/PUT /orders/1
-  def update
-    if @order.update(order_params)
-      render json: @order
+
+  def usual
+    orders = []
+    Struct.new("Items", :quantity, :product)
+
+    @user.orders.each { |order| orders.push(order.placements) }
+    maxCommand = @user.orders.to_ary.group_by { |order| order.placements.map{|placement| Struct::Items.new placement["quantity"], placement["product_id"] }}.inject({}){ |hash,(k,v)| hash.merge( k => v.count ) }.max_by{|k,v| v}
+    res = maxCommand.first
+    if res.nil?
+      render json: "Mdr pas de commande favorite", status: :not_found
     else
-      render json: @order.errors, status: :unprocessable_entity
+      res.map do |placement|
+        product = Product.find(placement.product)
+        placement.product = { name: product.name, price: product.price }
+        placement
+      end
+      render json: res, status: :ok
     end
   end
 
-  # DELETE /orders/1
-  def destroy
-    @order.destroy
-  end
+  # # PATCH/PUT /orders/1
+  # def update
+  #   if @order.update(order_params)
+  #     render json: @order
+  #   else
+  #     render json: @order.errors, status: :unprocessable_entity
+  #   end
+  # end
+
+  # # DELETE /orders/1
+  # def destroy
+  #   @order.destroy
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
