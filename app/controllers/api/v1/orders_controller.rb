@@ -24,7 +24,7 @@ class Api::V1::OrdersController < ApplicationController
         newPlacement.save
       else
         @order.destroy
-        render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
+        return render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
       end
     end
 
