@@ -15,28 +15,55 @@ class Api::V1::OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    @order = @user.orders.create(order_params.except(:products))
 
-    if @order.save
-      render json: @order, status: :created, location: @order
+    order_params["products"].each do |placement|
+      product = Product.where(name: placement["product"]["name"]).first
+      if product.nil?.!
+        newPlacement = Placement.new(order_id: @order.id, product_id: product.id, quantity: placement["quantity"])
+        newPlacement.save
+      else
+        @order.destroy
+        return render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
+      end
+    end
+
+    render json: @order, status: :created
+  end
+
+
+  def usual
+    orders = []
+    Struct.new("Items", :quantity, :product)
+
+    @user.orders.each { |order| orders.push(order.placements) }
+    maxCommand = @user.orders.to_ary.group_by { |order| order.placements.map{|placement| Struct::Items.new placement["quantity"], placement["product_id"] }}.inject({}){ |hash,(k,v)| hash.merge( k => v.count ) }.max_by{|k,v| v}
+    res = maxCommand.first
+    if res.nil?
+      render json: "Mdr pas de commande favorite", status: :not_found
     else
-      render json: @order.errors, status: :unprocessable_entity
+      res.map do |placement|
+        product = Product.find(placement.product)
+        placement.product = { name: product.name, price: product.price }
+        placement
+      end
+      render json: res, status: :ok
     end
   end
 
-  # PATCH/PUT /orders/1
-  def update
-    if @order.update(order_params)
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
-    end
-  end
+  # # PATCH/PUT /orders/1
+  # def update
+  #   if @order.update(order_params)
+  #     render json: @order
+  #   else
+  #     render json: @order.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  # DELETE /orders/1
-  def destroy
-    @order.destroy
-  end
+  # # DELETE /orders/1
+  # def destroy
+  #   @order.destroy
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -50,6 +77,6 @@ class Api::V1::OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit()
+      params.require(:order).permit(:user_id, products: [:quantity, product: :name])
     end
 end

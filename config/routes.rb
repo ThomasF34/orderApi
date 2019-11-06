@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :products
-      resources :users do
-        resources :orders
+      resources :products, only: [:index]
+      resources :users , only: [:show] do
+        get 'orders/usual', to: 'orders#usual'
+        resources :orders, only: [:create, :show]
         get 'address', on: :member
         get 'card', on: :member
       end

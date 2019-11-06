@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :user
-  has_many :placements
+  has_many :placements, dependent: :destroy
   has_many :products, through: :placements
 
   attribute :total
