@@ -6,7 +6,7 @@ class Api::V1::ProductsController < ApplicationController
     if(params['top'].nil?)
       @products = Product.all
     else
-      @products = Product.order('RANDOM()').limit(3)
+      @products = Product.order('RANDOM()').limit(params['top'])
     end
     render json: @products, each_serializer: FullProductSerializer
   end
