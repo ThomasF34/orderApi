@@ -18,7 +18,7 @@ class Api::V1::OrdersController < ApplicationController
     @order = @user.orders.create(order_params.except(:products))
 
     order_params["products"].each do |placement|
-      product = Product.where(name: placement["product"]["name"]).first
+      product = Product.where(name: placement["product"]["name"].downcase).first
       if product.nil?.!
         newPlacement = Placement.new(order_id: @order.id, product_id: product.id, quantity: placement["quantity"])
         newPlacement.save
@@ -34,7 +34,7 @@ class Api::V1::OrdersController < ApplicationController
   def cart
     total = 0
     order_params["products"].each do |placement|
-      product = Product.where(name: placement["product"]["name"]).first
+      product = Product.where(name: placement["product"]["name"].downcase).first
       if product.nil?.!
         total += product["price"]
       else
@@ -53,7 +53,7 @@ class Api::V1::OrdersController < ApplicationController
     maxCommand = @user.orders.to_ary.group_by { |order| order.placements.map{|placement| Struct::Items.new placement["quantity"], placement["product_id"] }}.inject({}){ |hash,(k,v)| hash.merge( k => v.count ) }.max_by{|k,v| v}
     res = maxCommand.first
     if res.nil?
-      render json: "Mdr pas de commande favorite", status: :not_found
+      render json: "Usual command not found", status: :not_found
     else
       res.map do |placement|
         product = Product.find(placement.product)
@@ -63,20 +63,6 @@ class Api::V1::OrdersController < ApplicationController
       render json: res, status: :ok
     end
   end
-
-  # # PATCH/PUT /orders/1
-  # def update
-  #   if @order.update(order_params)
-  #     render json: @order
-  #   else
-  #     render json: @order.errors, status: :unprocessable_entity
-  #   end
-  # end
-
-  # # DELETE /orders/1
-  # def destroy
-  #   @order.destroy
-  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

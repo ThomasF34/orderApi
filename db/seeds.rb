@@ -11,11 +11,11 @@ fatima = User.create(fname: 'Fatima', lname: 'Machhouri', email: 'secondEmail')
 
 fatima.payment_info = PaymentInfo.create(number: "0000000000000000", expire_date: "11/22", cvv: "123")
 
-Product.create(name: "Pizza 4 fromages", price: 8, description: "A product.")
-Product.create(name: "Burger à l'agneau", price: 11, description: "A product.")
-Product.create(name: "Bagel au saumon", price: 9, description: "A product.")
-Product.create(name: "Lasagne", price: 11, description: "A product.")
-Product.create(name: "Salade niçoise", price: 14, description: "A product.")
+Product.create(name: "pizza 4 fromages", price: 8, description: "A product.")
+Product.create(name: "burger à l'agneau", price: 11, description: "A product.")
+Product.create(name: "bagel au saumon", price: 9, description: "A product.")
+Product.create(name: "lasagne", price: 11, description: "A product.")
+Product.create(name: "salade niçoise", price: 14, description: "A product.")
 
 newOrder = thomas.orders.create()
 newOrder.placements.create(product_id: 1, quantity: 3)
