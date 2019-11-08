@@ -3,7 +3,11 @@ class Api::V1::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+    if(params['top'].nil?)
+      @products = Product.all
+    else
+      @products = Product.order('RANDOM()').limit(3)
+    end
     render json: @products, each_serializer: FullProductSerializer
   end
 
