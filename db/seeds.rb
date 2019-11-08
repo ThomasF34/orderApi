@@ -6,14 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-thomas = User.create(fname: 'Thomas', lname: 'Falcone', email: 'mySuperEmail', street: 'Here', postalcode: '00000', city: 'Obvious')
+thomas = User.create(fname: 'Thomas', lname: 'Falcone', email: 'mySuperEmail', street: 'Polytech, Place Eugène Bataillon', postalcode: '34090', city: 'Montpellier')
 fatima = User.create(fname: 'Fatima', lname: 'Machhouri', email: 'secondEmail')
 
 fatima.payment_info = PaymentInfo.create(number: "0000000000000000", expire_date: "11/22", cvv: "123")
 
-5.times do |i|
-  Product.create(name: "Product ##{i}", price: i + 20, description: "A product.")
-end
+Product.create(name: "Pizza 4 fromages", price: 8, description: "A product.")
+Product.create(name: "Burger à l'agneau", price: 11, description: "A product.")
+Product.create(name: "Bagel au saumon", price: 9, description: "A product.")
+Product.create(name: "Lasagne", price: 11, description: "A product.")
+Product.create(name: "Salade niçoise", price: 14, description: "A product.")
 
 newOrder = thomas.orders.create()
 
