@@ -31,6 +31,19 @@ class Api::V1::OrdersController < ApplicationController
     render json: @order, status: :created
   end
 
+  def cart
+    total = 0
+    order_params["products"].each do |placement|
+      product = Product.where(name: placement["product"]["name"]).first
+      if product.nil?.!
+        total += product["price"]
+      else
+        return render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
+      end
+    end
+
+    render json: { price: total, deliveryETA: 25 }.to_json, status: :ok
+  end
 
   def usual
     orders = []

@@ -18,5 +18,4 @@ Product.create(name: "Lasagne", price: 11, description: "A product.")
 Product.create(name: "Salade niçoise", price: 14, description: "A product.")
 
 newOrder = thomas.orders.create()
-
 newOrder.placements.create(product_id: 1, quantity: 3)

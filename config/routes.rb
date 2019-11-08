@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index]
       resources :users , only: [:show] do
         get 'orders/usual', to: 'orders#usual'
+        post 'cart', to: 'orders#cart'
         resources :orders, only: [:create, :show]
         get 'address', on: :member
         get 'card', on: :member

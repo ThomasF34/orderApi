@@ -4,13 +4,13 @@
       {
         "quantity": 1,
         "product": {
-          "name": "Product #1"
+          "name": "Pizza 4 fromages"
         }
       },
       {
-        "quantity": 1,
+        "quantity": 2,
         "product": {
-          "name": "Product #2"
+          "name": "Bagel au saumon"
         }
       }
     ]

@@ -4,13 +4,13 @@
       {
         "quantity": 1,
         "product": {
-          "name": "Product #1"
+          "name": "Product 11"
         }
       },
       {
         "quantity": 1,
         "product": {
-          "name": "Product #22"
+          "name": "Product 22"
         }
       }
     ]
