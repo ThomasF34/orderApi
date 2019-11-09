@@ -36,7 +36,7 @@ class Api::V1::OrdersController < ApplicationController
     order_params["products"].each do |placement|
       product = Product.where(name: placement["product"]["name"].downcase).first
       if product.nil?.!
-        total += product["price"] * placement["quantity"]
+        total += product["price"] * placement["quantity"].to_i
       else
         return render json: "Product #{placement["product"]["name"]} not found", status: :bad_request
       end
