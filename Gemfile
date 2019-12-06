@@ -7,7 +7,7 @@ ruby '2.6.3'
 gem 'rails', '~> 6.0.0'
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 gem 'rubocop', require: false
 gem 'rubocop-rspec', require: false
 gem 'active_model_serializers'
